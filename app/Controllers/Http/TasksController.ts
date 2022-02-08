@@ -1,20 +1,18 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
+import Task from 'App/Models/Task'
 
-export default class UsersController {
+export default class TasksController {
   public async index({}: HttpContextContract) {
-    return User.all()
+    const data = await Task.query().preload('labels')
+
+    return data
   }
 
   public async create({}: HttpContextContract) {}
 
   public async store({}: HttpContextContract) {}
 
-  public async show({ params }: HttpContextContract) {
-    const { id } = params
-    const data = await User.findByOrFail('id', id)
-    return data
-  }
+  public async show({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
 

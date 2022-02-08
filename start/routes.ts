@@ -20,6 +20,8 @@
 
 import './routes/user'
 import './routes/projects'
+import './routes/labels'
+import './routes/tasks'
 
 import Route from '@ioc:Adonis/Core/Route'
 

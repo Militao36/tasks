@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto'
 import { DateTime } from 'luxon'
 import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
@@ -29,5 +30,11 @@ export default class User extends BaseModel {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
+    user.id = randomUUID()
+  }
+
+  @beforeSave()
+  public static async generateUUID(user: User) {
+    user.id = randomUUID()
   }
 }

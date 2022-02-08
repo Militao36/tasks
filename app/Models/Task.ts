@@ -2,9 +2,9 @@ import { randomUUID } from 'crypto'
 
 import { DateTime } from 'luxon'
 import { BaseModel, beforeSave, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-import User from './User'
+import Label from './Label'
 
-export default class Project extends BaseModel {
+export default class Task extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
@@ -12,7 +12,16 @@ export default class Project extends BaseModel {
   public title: string
 
   @column()
+  public branch: string
+
+  @column()
   public description: string
+
+  @column()
+  public userId: string
+
+  @column()
+  public projectId: string
 
   @column()
   public startDate: DateTime
@@ -20,8 +29,8 @@ export default class Project extends BaseModel {
   @column()
   public endDate: DateTime
 
-  @manyToMany(() => User)
-  public users: ManyToMany<typeof User>
+  @manyToMany(() => Label)
+  public labels: ManyToMany<typeof Label>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -30,7 +39,7 @@ export default class Project extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async generateUUID(project: Project) {
-    project.id = randomUUID()
+  public static async generateUUID(task: Task) {
+    task.id = randomUUID()
   }
 }

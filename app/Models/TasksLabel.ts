@@ -3,15 +3,15 @@ import { randomUUID } from 'crypto'
 import { DateTime } from 'luxon'
 import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class ProjectUser extends BaseModel {
+export default class TasksLabel extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
   @column()
-  public projectId: string
+  public taskId: string
 
   @column()
-  public userId: string
+  public labelId: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -20,7 +20,7 @@ export default class ProjectUser extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async generateUUID(projectUser: ProjectUser) {
-    projectUser.id = randomUUID()
+  public static async generateUUID(taskLabel: TasksLabel) {
+    taskLabel.id = randomUUID()
   }
 }

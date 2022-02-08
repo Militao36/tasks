@@ -1,9 +1,9 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
+import Label from 'App/Models/Label'
 
-export default class UsersController {
+export default class LabelsController {
   public async index({}: HttpContextContract) {
-    return User.all()
+    return Label.all()
   }
 
   public async create({}: HttpContextContract) {}
@@ -11,8 +11,7 @@ export default class UsersController {
   public async store({}: HttpContextContract) {}
 
   public async show({ params }: HttpContextContract) {
-    const { id } = params
-    const data = await User.findByOrFail('id', id)
+    const data = await Label.findOrFail(params.id)
     return data
   }
 
