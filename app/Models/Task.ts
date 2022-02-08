@@ -4,6 +4,8 @@ import { DateTime } from 'luxon'
 import {
   BaseModel,
   beforeSave,
+  BelongsTo,
+  belongsTo,
   column,
   hasOne,
   HasOne,
@@ -40,8 +42,8 @@ export default class Task extends BaseModel {
   @column()
   public endDate: DateTime
 
-  @hasOne(() => User, { localKey: 'userId' })
-  public user: HasOne<typeof User>
+  @belongsTo(() => User, { foreignKey: 'userId' })
+  public user: BelongsTo<typeof User>
 
   @manyToMany(() => Label, {
     pivotTable: 'tasks_labels',

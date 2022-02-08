@@ -2,10 +2,18 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Task from 'App/Models/Task'
 
 export default class TasksController {
-  public async index({}: HttpContextContract) {
+  public async index({ request }: HttpContextContract) {
+    const { projectId } = request.qs()
+
     const data = await Task.query()
-      .select(['id', 'title', 'description', 'startDate', 'endDate'])
-      .preload('user')
+      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
+      .preload('user', (query) => {
+        query.select(['id', 'username', 'email'])
+      })
+      .preload('labels', (query) => {
+        query.select(['id', 'name', 'color'])
+      })
+      .where('project_id', '=', projectId)
 
     return data
   }
