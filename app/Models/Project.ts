@@ -1,10 +1,21 @@
 import { randomUUID } from 'crypto'
 
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeSave,
+  column,
+  HasMany,
+  hasMany,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
+import Task from './Task'
 
 export default class Project extends BaseModel {
+  public static table = 'projects'
+
   @column({ isPrimary: true })
   public id: string
 
@@ -20,8 +31,13 @@ export default class Project extends BaseModel {
   @column()
   public endDate: DateTime
 
-  @manyToMany(() => User)
+  @manyToMany(() => User, {
+    pivotTable: 'projects_users',
+  })
   public users: ManyToMany<typeof User>
+
+  @hasMany(() => Task)
+  public tasks: HasMany<typeof Task>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

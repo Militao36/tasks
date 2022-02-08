@@ -5,6 +5,8 @@ import { BaseModel, beforeSave, column, ManyToMany, manyToMany } from '@ioc:Adon
 import Label from './Label'
 
 export default class Task extends BaseModel {
+  public static table = 'tasks'
+
   @column({ isPrimary: true })
   public id: string
 

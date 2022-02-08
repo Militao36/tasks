@@ -3,7 +3,11 @@ import Task from 'App/Models/Task'
 
 export default class TasksController {
   public async index({}: HttpContextContract) {
-    const data = await Task.query().preload('labels')
+    const data = await Task.query()
+      .select(['id', 'title', 'description', 'startDate', 'endDate'])
+      .preload('labels', (query) => {
+        query.select(['id', 'name', 'color'])
+      })
 
     return data
   }

@@ -4,6 +4,8 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Label extends BaseModel {
+  public static table = 'labels'
+
   @column({ isPrimary: true })
   public id: string
 

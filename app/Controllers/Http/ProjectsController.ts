@@ -8,6 +8,9 @@ export default class ProjectsController {
       .preload('users', (query) => {
         query.select(['id', 'username'])
       })
+      .preload('tasks', (query) => {
+        query.select(['id', 'title', 'branch', 'description', 'startDate', 'endDate'])
+      })
 
     return data
   }

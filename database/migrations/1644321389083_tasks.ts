@@ -6,7 +6,7 @@ export default class Tasks extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id').primary()
-      table.string('title', 20).unique().notNullable()
+      table.string('title', 40).unique().notNullable()
       table.string('branch', 50)
       table.text('description')
       table.string('user_id', 36).references('users.id')
