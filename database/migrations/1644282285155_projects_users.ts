@@ -6,8 +6,8 @@ export default class ProjectUsers extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id', 36).primary()
-      table.string('project_id', 36).references('projects.id')
-      table.string('user_id', 36).references('users.id')
+      table.string('project_id', 36).references('id').inTable('projects')
+      table.string('user_id', 36).references('id').inTable('users')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

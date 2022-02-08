@@ -40,7 +40,7 @@ export default class Task extends BaseModel {
   @column()
   public endDate: DateTime
 
-  @hasOne(() => User, { localKey: 'userId', foreignKey: 'userId' })
+  @hasOne(() => User, { localKey: 'userId' })
   public user: HasOne<typeof User>
 
   @manyToMany(() => Label, {
