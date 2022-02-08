@@ -37,7 +37,7 @@ export default class ProjectsController {
 
     const { id } = await Project.findByOrFail('title', data.title)
 
-    const users = data.users.map((userId: string) => {
+    const users = data.users?.map((userId: string) => {
       return {
         userId,
         projectId: id,

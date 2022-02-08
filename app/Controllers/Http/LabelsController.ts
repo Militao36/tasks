@@ -8,7 +8,15 @@ export default class LabelsController {
 
   public async create({}: HttpContextContract) {}
 
-  public async store({}: HttpContextContract) {}
+  public async store({ request, response }: HttpContextContract) {
+    const data = request.only(['name', 'color'])
+
+    await Label.create(data)
+
+    const { id } = await Label.findByOrFail('name', data.name)
+
+    return response.status(201).json({ id })
+  }
 
   public async show({ params }: HttpContextContract) {
     const data = await Label.findOrFail(params.id)

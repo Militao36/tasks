@@ -20,7 +20,21 @@ export default class TasksController {
 
   public async create({}: HttpContextContract) {}
 
-  public async store({}: HttpContextContract) {}
+  public async store({ request, response }: HttpContextContract) {
+    const data = request.only([
+      'title',
+      'branch',
+      'description',
+      'userId',
+      'projectId',
+      'startDate',
+      'endDate',
+    ])
+
+    await Task.create(data)
+
+    return response.status(201).json({})
+  }
 
   public async show({}: HttpContextContract) {}
 
