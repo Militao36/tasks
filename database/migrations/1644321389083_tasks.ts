@@ -9,8 +9,8 @@ export default class Tasks extends BaseSchema {
       table.string('title', 40).unique().notNullable()
       table.string('branch', 50)
       table.text('description')
-      table.string('user_id', 36).references('users.id')
-      table.string('project_id', 36).references('projects.id')
+      table.string('user_id', 36).references('id').inTable('users')
+      table.string('project_id', 36).references('id').inTable('projects')
       table.dateTime('start_date')
       table.dateTime('end_date')
 

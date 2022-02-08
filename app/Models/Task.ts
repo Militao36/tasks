@@ -1,8 +1,17 @@
 import { randomUUID } from 'crypto'
 
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeSave,
+  column,
+  hasOne,
+  HasOne,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import Label from './Label'
+import User from './User'
 
 export default class Task extends BaseModel {
   public static table = 'tasks'
@@ -31,7 +40,12 @@ export default class Task extends BaseModel {
   @column()
   public endDate: DateTime
 
-  @manyToMany(() => Label)
+  @hasOne(() => User, { localKey: 'userId', foreignKey: 'userId' })
+  public user: HasOne<typeof User>
+
+  @manyToMany(() => Label, {
+    pivotTable: 'tasks_labels',
+  })
   public labels: ManyToMany<typeof Label>
 
   @column.dateTime({ autoCreate: true })

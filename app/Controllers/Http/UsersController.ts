@@ -3,7 +3,7 @@ import User from 'App/Models/User'
 
 export default class UsersController {
   public async index({}: HttpContextContract) {
-    return User.all()
+    return User.query().select(['id', 'username', 'email', 'setor'])
   }
 
   public async create({}: HttpContextContract) {}
@@ -13,6 +13,11 @@ export default class UsersController {
   public async show({ params }: HttpContextContract) {
     const { id } = params
     const data = await User.findByOrFail('id', id)
+
+    await data.load('projects', (query) => {
+      query.select(['id', 'title', 'description', 'startDate', 'endDate'])
+    })
+
     return data
   }
 

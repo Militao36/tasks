@@ -5,9 +5,7 @@ export default class TasksController {
   public async index({}: HttpContextContract) {
     const data = await Task.query()
       .select(['id', 'title', 'description', 'startDate', 'endDate'])
-      .preload('labels', (query) => {
-        query.select(['id', 'name', 'color'])
-      })
+      .preload('user')
 
     return data
   }
