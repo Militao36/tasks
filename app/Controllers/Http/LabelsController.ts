@@ -6,8 +6,6 @@ export default class LabelsController {
     return Label.all()
   }
 
-  public async create({}: HttpContextContract) {}
-
   public async store({ request, response }: HttpContextContract) {
     const data = request.only(['name', 'color'])
 
@@ -22,6 +20,8 @@ export default class LabelsController {
     const data = await Label.findOrFail(params.id)
     return data
   }
+
+  public async create({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
 

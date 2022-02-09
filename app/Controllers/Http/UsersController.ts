@@ -6,10 +6,6 @@ export default class UsersController {
     return User.query().select(['id', 'username', 'email', 'setor'])
   }
 
-  public async create({}: HttpContextContract) {}
-
-  public async store({}: HttpContextContract) {}
-
   public async show({ params }: HttpContextContract) {
     const { id } = params
     const data = await User.findByOrFail('id', id)
@@ -20,6 +16,10 @@ export default class UsersController {
 
     return data
   }
+
+  public async create({}: HttpContextContract) {}
+
+  public async store({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
 
