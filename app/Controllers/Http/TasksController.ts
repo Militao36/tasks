@@ -1,9 +1,16 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Task from 'App/Models/Task'
+import { MessagesResponses } from '../../../utils/messages/MessagesResponse'
 
 export default class TasksController {
-  public async index({ request }: HttpContextContract) {
+  public async index({ request, response }: HttpContextContract) {
     const { projectId } = request.qs()
+
+    if (!projectId) {
+      return response.notFound({
+        message: MessagesResponses.NOT_FOUND,
+      })
+    }
 
     const data = await Task.query()
       .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
