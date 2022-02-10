@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class ProjectUser extends BaseModel {
   public static table = 'projects_users'
@@ -23,7 +23,7 @@ export default class ProjectUser extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @beforeSave()
+  @beforeCreate()
   public static async generateUUID(projectUser: ProjectUser) {
     projectUser.id = randomUUID()
   }

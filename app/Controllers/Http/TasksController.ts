@@ -43,11 +43,41 @@ export default class TasksController {
     return response.status(201).json({ id })
   }
 
+  public async update({ request, response, params }: HttpContextContract) {
+    const { id } = params
+
+    const data = request.only([
+      'title',
+      'branch',
+      'description',
+      'userId',
+      'projectId',
+      'startDate',
+      'endDate',
+    ])
+
+    const titleAlreadyInUse = await Task.findBy('title', data.title)
+
+    if (titleAlreadyInUse?.id && titleAlreadyInUse?.id !== id) {
+      return response.status(422).json({
+        message: 'Esse titulo já está em uso.',
+      })
+    }
+
+    const task = await Task.findOrFail(id)
+
+    task.merge({
+      ...data,
+    })
+
+    await task.save()
+
+    return response.status(204).json({})
+  }
+
   public async show({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
-
-  public async update({}: HttpContextContract) {}
 
   public async destroy({}: HttpContextContract) {}
 }

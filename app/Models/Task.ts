@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto'
 import { DateTime } from 'luxon'
 import {
   BaseModel,
-  beforeSave,
+  beforeCreate,
   BelongsTo,
   belongsTo,
   column,
@@ -56,7 +56,7 @@ export default class Task extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @beforeSave()
+  @beforeCreate()
   public static async generateUUID(task: Task) {
     task.id = randomUUID()
   }

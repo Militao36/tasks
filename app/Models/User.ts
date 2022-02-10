@@ -1,6 +1,13 @@
 import { randomUUID } from 'crypto'
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeCreate,
+  beforeSave,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Project from './Project'
 
@@ -42,7 +49,7 @@ export default class User extends BaseModel {
     }
   }
 
-  @beforeSave()
+  @beforeCreate()
   public static async generateUUID(user: User) {
     user.id = randomUUID()
   }

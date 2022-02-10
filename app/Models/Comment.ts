@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Task from './Task'
 import Project from './Project'
 
@@ -34,7 +34,7 @@ export default class Comment extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @beforeSave()
+  @beforeCreate()
   public static async generateUUID(comment: Comment) {
     comment.id = randomUUID()
   }
