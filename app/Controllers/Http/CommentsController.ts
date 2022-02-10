@@ -19,9 +19,7 @@ export default class CommentsController {
       query.where('task_id', '=', id)
     }
 
-    const comments = await query
-      .select(['id', 'projectId', 'taskId', 'comment'])
-      .orderBy('created_at', 'asc')
+    const comments = await query.select().orderBy('created_at', 'asc')
 
     return response.status(200).json(comments)
   }
