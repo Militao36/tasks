@@ -6,6 +6,8 @@ import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 export default class TasksLabel extends BaseModel {
   public static table = 'tasks_labels'
 
+  public static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
   public id: string
 

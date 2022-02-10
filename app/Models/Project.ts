@@ -16,6 +16,8 @@ import Task from './Task'
 export default class Project extends BaseModel {
   public static table = 'projects'
 
+  public static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
   public id: string
 

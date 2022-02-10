@@ -9,9 +9,7 @@ export default class LabelsController {
   public async store({ request, response }: HttpContextContract) {
     const data = request.only(['name', 'color'])
 
-    await Label.create(data)
-
-    const { id } = await Label.findByOrFail('name', data.name)
+    const { id } = await Label.create(data)
 
     return response.status(201).json({ id })
   }

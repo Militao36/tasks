@@ -38,9 +38,9 @@ export default class TasksController {
       'endDate',
     ])
 
-    await Task.create(data)
+    const { id } = await Task.create(data)
 
-    return response.status(201).json({})
+    return response.status(201).json({ id })
   }
 
   public async show({}: HttpContextContract) {}

@@ -22,6 +22,7 @@ import './routes/user'
 import './routes/projects'
 import './routes/labels'
 import './routes/tasks'
+import './routes/comment'
 
 import Route from '@ioc:Adonis/Core/Route'
 

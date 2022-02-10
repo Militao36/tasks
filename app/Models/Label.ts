@@ -6,6 +6,8 @@ import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 export default class Label extends BaseModel {
   public static table = 'labels'
 
+  public static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
   public id: string
 

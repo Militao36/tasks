@@ -7,6 +7,8 @@ import Project from './Project'
 export default class User extends BaseModel {
   public static table = 'users'
 
+  public static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
   public id: string
 

@@ -6,6 +6,8 @@ import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 export default class ProjectUser extends BaseModel {
   public static table = 'projects_users'
 
+  public static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
   public id: string
 
