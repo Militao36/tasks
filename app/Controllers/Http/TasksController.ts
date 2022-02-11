@@ -25,17 +25,15 @@ export default class TasksController {
     return data
   }
 
-  public async create({}: HttpContextContract) {}
-
   public async store({ request, response }: HttpContextContract) {
     const data = request.only([
       'title',
       'branch',
       'description',
-      'userId',
-      'projectId',
-      'startDate',
-      'endDate',
+      'user_id',
+      'project_id',
+      'start_date',
+      'end_date',
     ])
 
     const { id } = await Task.create(data)
@@ -50,10 +48,10 @@ export default class TasksController {
       'title',
       'branch',
       'description',
-      'userId',
-      'projectId',
-      'startDate',
-      'endDate',
+      'user_id',
+      'project_id',
+      'start_date',
+      'end_date',
     ])
 
     const titleAlreadyInUse = await Task.findBy('title', data.title)
@@ -74,6 +72,8 @@ export default class TasksController {
 
     return response.status(204).json({})
   }
+
+  public async create({}: HttpContextContract) {}
 
   public async show({}: HttpContextContract) {}
 

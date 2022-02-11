@@ -5,7 +5,7 @@ import ProjectUser from 'App/Models/ProjectUser'
 export default class ProjectsController {
   public async index({}: HttpContextContract) {
     const data = await Project.query()
-      .select(['id', 'title', 'description', 'startDate', 'endDate'])
+      .select(['id', 'title', 'description', 'start_date', 'end_date'])
       .preload('users', (query) => {
         query.select(['id', 'username'])
       })
@@ -37,8 +37,8 @@ export default class ProjectsController {
 
     const users = data.users?.map((userId: string) => {
       return {
-        userId,
-        projectId: id,
+        user_id: userId,
+        project_id: id,
       }
     })
 

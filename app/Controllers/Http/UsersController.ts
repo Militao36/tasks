@@ -11,7 +11,7 @@ export default class UsersController {
     const data = await User.findByOrFail('id', id)
 
     await data.load('projects', (query) => {
-      query.select(['id', 'title', 'description', 'startDate', 'endDate'])
+      query.select(['id', 'title', 'description', 'start_date', 'end_date'])
     })
 
     return data

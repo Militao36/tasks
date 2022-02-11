@@ -25,17 +25,17 @@ export default class CommentsController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const data = request.only(['projectId', 'taskId', 'comment'])
+    const data = request.only(['project_id', 'task_id', 'comment'])
 
-    if (data.projectId && data.taskId) {
+    if (data.project_id && data.task_id) {
       return response.badRequest()
     }
 
     const comment = new Comment()
 
     comment.fill({
-      projectId: data?.projectId,
-      taskId: data?.taskId,
+      projectId: data?.project_id,
+      taskId: data?.task_id,
       comment: data.comment,
     })
 
