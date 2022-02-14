@@ -73,9 +73,20 @@ export default class TasksController {
     return response.status(204).json({})
   }
 
-  public async create({}: HttpContextContract) {}
+  public async show({ params }: HttpContextContract) {
+    const { id } = params
 
-  public async show({}: HttpContextContract) {}
+    const data = await Task.query()
+      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
+      .preload('labels', (query) => query.select(['id', 'name', 'color']))
+      .preload('comments', (query) => query.select('comment').preload('user'))
+      .where('id', '=', id)
+      .first()
+
+    return data
+  }
+
+  public async create({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
 

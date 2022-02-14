@@ -4,6 +4,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Task from './Task'
 import Project from './Project'
+import User from './User'
 
 export default class Comment extends BaseModel {
   public static table = 'comments'
@@ -20,10 +21,16 @@ export default class Comment extends BaseModel {
   public taskId?: string
 
   @column()
+  public userId?: string
+
+  @column()
   public comment: string
 
   @belongsTo(() => Task)
   public task: BelongsTo<typeof Task>
+
+  @belongsTo(() => User)
+  public user: BelongsTo<typeof User>
 
   @belongsTo(() => Project)
   public project: BelongsTo<typeof Project>

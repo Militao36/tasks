@@ -8,6 +8,7 @@ export default class Comments extends BaseSchema {
       table.string('id', 36).primary()
       table.string('task_id', 36).references('id').inTable('tasks')
       table.string('project_id', 36).references('id').inTable('projects')
+      table.string('user_id', 36).references('id').inTable('users')
       table.text('comment').notNullable()
 
       /**

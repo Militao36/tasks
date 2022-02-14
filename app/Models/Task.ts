@@ -7,11 +7,14 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  HasMany,
+  hasMany,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Label from './Label'
 import User from './User'
+import Comment from './Comment'
 
 export default class Task extends BaseModel {
   public static table = 'tasks'
@@ -49,6 +52,9 @@ export default class Task extends BaseModel {
     pivotTable: 'tasks_labels',
   })
   public labels: ManyToMany<typeof Label>
+
+  @hasMany(() => Comment)
+  public comments: HasMany<typeof Comment>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
