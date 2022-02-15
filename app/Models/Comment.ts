@@ -21,7 +21,7 @@ export default class Comment extends BaseModel {
   public taskId?: string
 
   @column()
-  public userId?: string
+  public userId: string
 
   @column()
   public comment: string
@@ -29,10 +29,10 @@ export default class Comment extends BaseModel {
   @belongsTo(() => Task)
   public task: BelongsTo<typeof Task>
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, { foreignKey: 'userId' })
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => Project)
+  @belongsTo(() => Project, { foreignKey: 'projectId' })
   public project: BelongsTo<typeof Project>
 
   @column.dateTime({ autoCreate: true })

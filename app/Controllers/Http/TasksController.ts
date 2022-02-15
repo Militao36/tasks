@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Task from 'App/Models/Task'
 import { MessagesResponses } from '../../../utils/messages/MessagesResponse'
@@ -79,7 +80,7 @@ export default class TasksController {
     const data = await Task.query()
       .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
       .preload('labels', (query) => query.select(['id', 'name', 'color']))
-      .preload('comments', (query) => query.select('comment').preload('user'))
+      .preload('comments', (query) => query.select('comment', 'user_id', 'created_at').orderBy('created_at', 'asc').preload('user', (query)=> query.select('id', 'username')))
       .where('id', '=', id)
       .first()
 
