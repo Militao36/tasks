@@ -12,16 +12,23 @@ export default class CommentsController {
     }
 
     if (type === 'project') {
-      query.where('project_id', '=', id)
+      query
+        .where('project_id', '=', id)
+        .preload('user', (query) => query.select(['id', 'username']))
     }
 
     if (type === 'task') {
-      query.where('task_id', '=', id)
+      query.where('task_id', '=', id).preload('user', (query) => query.select(['id', 'username']))
     }
 
     const comments = await query.select().orderBy('created_at', 'asc')
 
-    return response.status(200).json(comments)
+    return comments.map((comment) => {
+      return {
+        ...comment.serialize(),
+        created_at: comment.createdAt.toFormat('dd/MM/yyyy HH:mm'),
+      }
+    })
   }
 
   public async store({ request, response }: HttpContextContract) {

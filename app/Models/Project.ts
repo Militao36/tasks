@@ -33,6 +33,9 @@ export default class Project extends BaseModel {
   @column()
   public endDate: DateTime
 
+  @column()
+  public deliveryDate: DateTime
+
   @manyToMany(() => User, {
     pivotTable: 'projects_users',
   })

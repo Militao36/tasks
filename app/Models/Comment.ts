@@ -8,7 +8,7 @@ import User from './User'
 
 export default class Comment extends BaseModel {
   public static table = 'comments'
-  // para não da problema o id de não retornar
+
   public static selfAssignPrimaryKey = true
 
   @column({ isPrimary: true })

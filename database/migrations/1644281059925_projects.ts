@@ -10,6 +10,8 @@ export default class Projects extends BaseSchema {
       table.text('description')
       table.dateTime('start_date')
       table.dateTime('end_date')
+      table.dateTime('delivery_date')
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

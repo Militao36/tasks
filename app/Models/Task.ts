@@ -45,6 +45,9 @@ export default class Task extends BaseModel {
   @column()
   public endDate: DateTime
 
+  @column()
+  public timeDays: number
+
   @belongsTo(() => User, { foreignKey: 'userId' })
   public user: BelongsTo<typeof User>
 

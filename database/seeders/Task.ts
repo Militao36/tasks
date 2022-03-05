@@ -15,6 +15,7 @@ export default class TaskSeeder extends BaseSeeder {
         branch: 'tela-caixa',
         projectId: projects[0].id,
         userId: users[0].id,
+        timeDays: 10,
       },
       {
         title: 'Adicionar tela de cliente',
@@ -22,6 +23,7 @@ export default class TaskSeeder extends BaseSeeder {
         branch: 'tela-cliente',
         projectId: projects[1].id,
         userId: users[1].id,
+        timeDays: 1,
       },
       {
         title: 'Adicionar tela de venda',
@@ -29,6 +31,7 @@ export default class TaskSeeder extends BaseSeeder {
         branch: 'tela-venda',
         projectId: projects[2].id,
         userId: users[2].id,
+        timeDays: 0,
       },
     ])
   }
