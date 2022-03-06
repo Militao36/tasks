@@ -109,6 +109,7 @@ export default class TasksController {
         query.whereNotNull('start_date').andWhereNull('end_date')
     }
 
+    console.log(query.toQuery())
     const tasks = await query
     return tasks.map((task) => {
       return {
