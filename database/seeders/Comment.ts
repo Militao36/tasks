@@ -5,7 +5,6 @@ import Task from 'App/Models/Task'
 export default class CommentSeeder extends BaseSeeder {
   public async run() {
     const tasks = await Task.all()
-    console.log(tasks)
 
     await Comment.createMany([
       {

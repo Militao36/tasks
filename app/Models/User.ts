@@ -10,9 +10,12 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Project from './Project'
+import { CamelCaseNamingStrategy } from 'App/NamingStrategy/CamelCaseNamingStrategy'
 
 export default class User extends BaseModel {
   public static table = 'users'
+
+  public static namingStrategy = new CamelCaseNamingStrategy()
 
   public static selfAssignPrimaryKey = true
 

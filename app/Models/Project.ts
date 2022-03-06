@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto'
-
 import { DateTime } from 'luxon'
+
 import {
   BaseModel,
   beforeCreate,
@@ -10,11 +10,16 @@ import {
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
+
+import { CamelCaseNamingStrategy } from 'App/NamingStrategy/CamelCaseNamingStrategy'
+
 import User from './User'
 import Task from './Task'
 
 export default class Project extends BaseModel {
   public static table = 'projects'
+
+  public static namingStrategy = new CamelCaseNamingStrategy()
 
   public static selfAssignPrimaryKey = true
 
@@ -27,14 +32,17 @@ export default class Project extends BaseModel {
   @column()
   public description: string
 
-  @column()
+  @column.dateTime()
   public startDate: DateTime
 
-  @column()
+  @column.dateTime()
   public endDate: DateTime
 
-  @column()
+  @column.dateTime()
   public deliveryDate: DateTime
+
+  @column()
+  public status: 'draft' | 'published'
 
   @manyToMany(() => User, {
     pivotTable: 'projects_users',

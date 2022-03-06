@@ -15,9 +15,12 @@ import {
 import Label from './Label'
 import User from './User'
 import Comment from './Comment'
+import { CamelCaseNamingStrategy } from 'App/NamingStrategy/CamelCaseNamingStrategy'
 
 export default class Task extends BaseModel {
   public static table = 'tasks'
+
+  public static namingStrategy = new CamelCaseNamingStrategy()
 
   public static selfAssignPrimaryKey = true
 
@@ -39,10 +42,10 @@ export default class Task extends BaseModel {
   @column()
   public projectId: string
 
-  @column()
+  @column.dateTime()
   public startDate: DateTime
 
-  @column()
+  @column.dateTime()
   public endDate: DateTime
 
   @column()

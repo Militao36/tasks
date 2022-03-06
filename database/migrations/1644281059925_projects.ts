@@ -11,6 +11,7 @@ export default class Projects extends BaseSchema {
       table.dateTime('start_date')
       table.dateTime('end_date')
       table.dateTime('delivery_date')
+      table.enum('status', ['draft', 'published'])
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
