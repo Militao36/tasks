@@ -25,7 +25,7 @@ class ProjectService {
     const { id } = await Project.create({
       title: body.title,
       description: body.description,
-      deliveryDate: body.deliveryDate as any,
+      deliveryDate: body.deliveryDate || null as any,
       status: Status.draft,
     })
 

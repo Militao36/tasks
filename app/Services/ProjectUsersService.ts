@@ -7,13 +7,13 @@ export interface IProjectUser {
 }
 
 class ProjectUsersService {
-  public async create(projectId: string, body: { users: [] }): Promise<void> {
-    const projectUsers: IProjectUser[] = body?.users?.map((user: { id: string }) => {
+  public async create(projectId: string, body: []): Promise<void> {
+    const projectUsers: IProjectUser[] = body?.map((user: { id: string }) => {
       return {
         userId: user.id,
         projectId,
       }
-    }) ?? []
+    }) || []
 
     await ProjectUser.fetchOrCreateMany(['projectId', 'userId'], projectUsers)
   }
