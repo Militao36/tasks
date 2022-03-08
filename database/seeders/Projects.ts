@@ -8,8 +8,10 @@ export default class ProjectsSeeder extends BaseSeeder {
       {
         title: 'Winfit',
         description: '# Teste Winfit',
-        startDate: DateTime.local().plus({ day: 10 }).toSQL({ includeOffset: false }) as any,
-        deliveryDate: DateTime.local().plus({ day: 10 }).toSQL({ includeOffset: false }) as any,
+        startDate: DateTime.local(),
+        endDate: DateTime.local().plus({ day: 5 }),
+        deliveryDate: DateTime.local().plus({ day: 5 }),
+        expectedDate: DateTime.local().plus({ day: 10 }),
         status: 'published',
       },
       {
@@ -20,8 +22,8 @@ export default class ProjectsSeeder extends BaseSeeder {
       {
         title: 'Api Compêndio',
         description: '# Teste Api Compendio',
-        startDate: DateTime.local().toSQL({ includeOffset: false }) as any,
-        deliveryDate: DateTime.local().plus({ day: 15 }).toSQL({ includeOffset: false }) as any,
+        startDate: DateTime.local(),
+        expectedDate: DateTime.local().plus({ day: 15 }),
         status: 'published',
       },
     ])

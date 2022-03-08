@@ -1,7 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import ProjectService, { Status } from 'App/Services/ProjectService'
-import ProjectUsersService, { IProjectUser } from 'App/Services/ProjectUsersService'
+import ProjectUsersService from 'App/Services/ProjectUsersService'
 
 export default class ProjectsController {
   private projectService: typeof ProjectService
@@ -12,7 +12,7 @@ export default class ProjectsController {
     this.projectUsersService = ProjectUsersService
   }
 
-  public async index({}: HttpContextContract) {
+  public async index({ }: HttpContextContract) {
     const data = await this.projectService.index()
     return data
   }
@@ -20,7 +20,7 @@ export default class ProjectsController {
   public async show({ params }: HttpContextContract) {
     const project = await this.projectService.show(params.id)
 
-    return project.toJSON()
+    return project
   }
 
   public async store({ request }: HttpContextContract) {
@@ -33,14 +33,7 @@ export default class ProjectsController {
       deliveryDate: data.deliveryDate,
     })
 
-    const users: IProjectUser[] = data.users?.map((userId: string) => {
-      return {
-        userId: userId,
-        projectId: id,
-      }
-    })
-
-    await this.projectUsersService.create(users)
+    await this.projectUsersService.create(id, data.users)
 
     return id
   }
@@ -53,10 +46,10 @@ export default class ProjectsController {
       id,
       title: data.title,
       description: data.description,
-      deliveryDate: data.deliveryDate,
-      status: data.status,
-      users: data.users,
+      deliveryDate: data.deliveryDate
     })
+
+    await this.projectUsersService.create(id, data.users)
   }
 
   public async removeUserOfProject({ params, response }: HttpContextContract) {
@@ -65,9 +58,9 @@ export default class ProjectsController {
     return response.noContent()
   }
 
-  public async create({}: HttpContextContract) {}
+  public async create({ }: HttpContextContract) { }
 
-  public async edit({}: HttpContextContract) {}
+  public async edit({ }: HttpContextContract) { }
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy({ }: HttpContextContract) { }
 }

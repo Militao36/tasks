@@ -41,6 +41,9 @@ export default class Project extends BaseModel {
   @column.dateTime()
   public deliveryDate: DateTime
 
+  @column.dateTime()
+  public expectedDate: DateTime
+
   @column()
   public status: 'draft' | 'published'
 

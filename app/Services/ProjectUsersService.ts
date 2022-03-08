@@ -7,13 +7,15 @@ export interface IProjectUser {
 }
 
 class ProjectUsersService {
-  public async create(body: IProjectUser | IProjectUser[]): Promise<void> {
-    if (Array.isArray(body)) {
-      await ProjectUser.fetchOrCreateMany(['projectId', 'userId'], body)
-      return
-    }
+  public async create(projectId: string, body: { users: [] }): Promise<void> {
+    const projectUsers: IProjectUser[] = body?.users?.map((user: { id: string }) => {
+      return {
+        userId: user.id,
+        projectId,
+      }
+    }) ?? []
 
-    await ProjectUser.fetchOrCreateMany(['projectId', 'userId'], [body])
+    await ProjectUser.fetchOrCreateMany(['projectId', 'userId'], projectUsers)
   }
 
   public async delete(projectId: string, userId: string) {
