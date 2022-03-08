@@ -38,7 +38,7 @@ class ProjectService {
     project.merge({
       title: body.title,
       description: body.title,
-      deliveryDate: body.deliveryDate as DateTime,
+      deliveryDate: (body.deliveryDate || null) as any,
     })
 
     await project.save()
