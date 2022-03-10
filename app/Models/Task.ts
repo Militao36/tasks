@@ -16,6 +16,7 @@ import Label from './Label'
 import User from './User'
 import Comment from './Comment'
 import { CamelCaseNamingStrategy } from 'App/NamingStrategy/CamelCaseNamingStrategy'
+import List from './List'
 
 export default class Task extends BaseModel {
   public static table = 'tasks'
@@ -48,11 +49,17 @@ export default class Task extends BaseModel {
   @column.dateTime()
   public endDate: DateTime
 
+  @column.dateTime()
+  public deliveryDate: DateTime
+
   @column()
-  public timeDays: number
+  public listId: string
 
   @belongsTo(() => User, { foreignKey: 'userId' })
   public user: BelongsTo<typeof User>
+
+  @belongsTo(() => List, { foreignKey: 'listId' })
+  public list: BelongsTo<typeof List>
 
   @manyToMany(() => Label, {
     pivotTable: 'tasks_labels',

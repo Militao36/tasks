@@ -13,7 +13,9 @@ export default class Tasks extends BaseSchema {
       table.string('project_id', 36).references('id').inTable('projects')
       table.dateTime('start_date')
       table.dateTime('end_date')
-      table.integer('time_days')
+      table.dateTime('delivery_date')
+      table.string('list_id', 36).references('id').inTable('lists')
+
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
