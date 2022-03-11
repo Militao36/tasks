@@ -14,13 +14,12 @@ export default class TasksController {
     }
 
     const data = await Task.query()
-      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
-      .preload('user', (query) => {
-        query.select(['id', 'username', 'email'])
-      })
+      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id', 'listId'])
+      .preload('user', (query) => query.select(['id', 'username', 'email']))
       .preload('labels', (query) => {
         query.select(['id', 'name', 'color'])
       })
+      .preload('list', (query) => query.select(['id', 'title']))
       .where('project_id', '=', projectId)
 
     return data
@@ -119,9 +118,9 @@ export default class TasksController {
     })
   }
 
-  public async create({}: HttpContextContract) {}
+  public async create({ }: HttpContextContract) { }
 
-  public async edit({}: HttpContextContract) {}
+  public async edit({ }: HttpContextContract) { }
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy({ }: HttpContextContract) { }
 }

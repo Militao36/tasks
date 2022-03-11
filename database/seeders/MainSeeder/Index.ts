@@ -12,5 +12,6 @@ export default class IndexSeeder extends BaseSeeder {
     await this.runSeeder(await import('../Label'))
     await this.runSeeder(await import('../Task'))
     await this.runSeeder(await import('../Comment'))
+    await this.runSeeder(await import('../List'))
   }
 }
