@@ -26,6 +26,4 @@ import './routes/projects'
 import './routes/tasks'
 import './routes/user'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.post('/auth', 'AuthController.auth')

@@ -5,4 +5,6 @@ Route.group(() => {
   Route.post('/', 'CommentsController.store')
   Route.put('/:id', 'CommentsController.update')
   Route.delete('/:id', 'CommentsController.delete')
-}).prefix('/comments')
+})
+  .prefix('/comments')
+  .middleware('auth')

@@ -6,4 +6,6 @@ Route.group(() => {
   Route.put('/:id', 'ProjectsController.update')
   Route.post('/', 'ProjectsController.store')
   Route.delete('/:projectId/:userId', 'ProjectsController.removeUserOfProject')
-}).prefix('/projects')
+})
+  .prefix('/projects')
+  .middleware('auth')

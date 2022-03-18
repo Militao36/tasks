@@ -52,6 +52,15 @@
     picomatch "^2.3.1"
     slash "^3.0.0"
 
+"@adonisjs/auth@^8.0.12":
+  version "8.0.12"
+  resolved "https://registry.yarnpkg.com/@adonisjs/auth/-/auth-8.0.12.tgz#7d2bb9f043cc4d8a4788cc4107a7c7479d28c25c"
+  integrity sha512-LoNsg+z289hlxBbzQJTA68cIhMLV5N4ty64A40Yly6+tDo51+n4Q/sqHpAj9OKZHlGbMK5fP3DRgLdRl/Uli+w==
+  dependencies:
+    "@poppinss/hooks" "^5.0.2"
+    "@poppinss/utils" "^4.0.2"
+    luxon "^2.3.1"
+
 "@adonisjs/bodyparser@^8.0.1":
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/@adonisjs/bodyparser/-/bodyparser-8.1.0.tgz#43aeb5355f09a7a109cb94f554b3fc96b127af0d"
@@ -308,7 +317,7 @@
   resolved "https://registry.yarnpkg.com/@kdf/salt/-/salt-2.0.1.tgz#2d355a764524fa85217609addc376084b71de385"
   integrity sha512-1RBY7HcGYuWBm0+4ygjdRerN+mhpuT5picGB6+azqUXsz/IZljegrKkeHRiV6wuxY8n4HrxOuw8ou7JuGxRWdQ==
 
-"@mapbox/node-pre-gyp@^1.0.0":
+"@mapbox/node-pre-gyp@^1.0.0", "@mapbox/node-pre-gyp@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.8.tgz#32abc8a5c624bc4e46c43d84dfb8b26d33a96f58"
   integrity sha512-CMGKi28CF+qlbXh26hDe6NxCd7amqeAzEqnS6IHeO6LoaKyM/n+Xw3HT1COdq8cuioOdlKdqn/hCmqPUOMOywg==
@@ -432,6 +441,11 @@
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@poppinss/hooks/-/hooks-3.0.5.tgz#ae491fc11500bc9cb7e24f6b637704e7d9868505"
   integrity sha512-kazQstmIPq4n7/qjk5ms9SEiXtLEJ+EMZXxyXTupTVq7URFIUeULgXFv/F3vheLPCSzfByu/L2iO7M457RjszQ==
+
+"@poppinss/hooks@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@poppinss/hooks/-/hooks-5.0.2.tgz#b425630eec5501dce639cd43b895094a792e50c3"
+  integrity sha512-e5WuQ90qC/NHepIVAGQxReCjZMwICw3AHHcvZQmZA3wiUI6eiYpYw/uScotCoo5ti8Mhtbmvrv4QUeMk5n16ag==
 
 "@poppinss/manager@^4.0.4":
   version "4.0.4"
@@ -832,6 +846,15 @@ are-we-there-yet@^2.0.0:
   dependencies:
     delegates "^1.0.0"
     readable-stream "^3.6.0"
+
+argon2@^0.28.4:
+  version "0.28.5"
+  resolved "https://registry.yarnpkg.com/argon2/-/argon2-0.28.5.tgz#0c8d6366c389bae3194c89baf4011721a644ded4"
+  integrity sha512-kGFCctzc3VWmR1aCOYjNgvoTmVF5uVBUtWlXCKKO54d1K+31zRz45KAcDIqMo2746ozv/52d25nfEekitaXP0w==
+  dependencies:
+    "@mapbox/node-pre-gyp" "^1.0.8"
+    "@phc/format" "^1.0.0"
+    node-addon-api "^4.3.0"
 
 argparse@^2.0.1:
   version "2.0.1"
@@ -3062,6 +3085,11 @@ node-addon-api@^3.1.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.2.1.tgz#81325e0a2117789c0128dab65e7e38f07ceba161"
   integrity sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==
 
+node-addon-api@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-4.3.0.tgz#52a1a0b475193e0928e98e0426a0d1254782b77f"
+  integrity sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==
+
 node-emoji@^1.10.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.11.0.tgz#69a0150e6946e2f115e9d7ea4df7971e2628301c"
@@ -3367,6 +3395,16 @@ pg-connection-string@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.5.0.tgz#538cadd0f7e603fc09a12590f3b8a452c2c0cf34"
   integrity sha512-r5o/V/ORTA6TmUnyWZR9nCj1klXCO2CEKNRlVuJptZe85QuhFayC7WeMic7ndayT5IRIR0S0xFxFi2ousartlQ==
+
+phc-argon2@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/phc-argon2/-/phc-argon2-1.1.3.tgz#9cfac7544518e092c086648c2abd398b61f9101b"
+  integrity sha512-RMvqQ60/CfOQv0TuSdyQ1voGbHvOdCCtcphHA6bUlxphh0iNEOHdO+YJE+jsz5V6gc78TmJreOQxV8BOC74f2w==
+  dependencies:
+    "@kdf/salt" "^2.0.1"
+    "@phc/format" "^1.0.0"
+    argon2 "^0.28.4"
+    tsse "^2.0.0"
 
 phc-bcrypt@^1.0.7:
   version "1.0.7"

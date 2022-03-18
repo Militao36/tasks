@@ -9,4 +9,6 @@ Route.group(() => {
 
   Route.get('/status/:status', 'TasksController.tasks')
   Route.get('/', 'TasksController.index')
-}).prefix('/tasks')
+})
+  .prefix('/tasks')
+  .middleware('auth')
