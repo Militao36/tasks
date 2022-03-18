@@ -35,9 +35,9 @@ export default class ProjectsController {
 
     const { id } = await project.save()
 
-    const users = data.users?.map((userId: string) => {
+    const users = data.users?.map((userId: any) => {
       return {
-        user_id: userId,
+        user_id: userId.id,
         project_id: id,
       }
     })
