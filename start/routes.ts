@@ -24,6 +24,12 @@ import './routes/labels'
 import './routes/lists'
 import './routes/projects'
 import './routes/tasks'
+import './routes/comment'
+import './routes/labelsTask'
 import './routes/user'
+
+import Route from '@ioc:Adonis/Core/Route'
+
+
 
 Route.post('/auth', 'AuthController.auth')

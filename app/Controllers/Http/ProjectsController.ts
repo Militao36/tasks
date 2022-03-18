@@ -35,6 +35,13 @@ export default class ProjectsController {
 
     await this.projectUsersService.create(id, data.users)
 
+    const users = data.users?.map((user: any) => {
+      return {
+        user_id: user.id,
+        project_id: id,
+      }
+    })
+    
     return id
   }
 
