@@ -63,7 +63,7 @@ class CommentService {
     const comment = await Comment.findByOrFail('id', body.id)
 
     comment.merge({
-      ...body,
+      comment: body.comment,
       userId: user.id,
     })
 
