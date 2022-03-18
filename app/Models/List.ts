@@ -1,8 +1,7 @@
-import { randomUUID } from 'crypto'
-
-import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import { CamelCaseNamingStrategy } from 'App/NamingStrategy/CamelCaseNamingStrategy'
+import { randomUUID } from 'crypto'
+import { DateTime } from 'luxon'
 import Task from './Task'
 
 export default class List extends BaseModel {
@@ -17,6 +16,9 @@ export default class List extends BaseModel {
 
   @column()
   public title: string
+
+  @column()
+  public projectId: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

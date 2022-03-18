@@ -19,23 +19,13 @@ export default class TasksController {
       .preload('labels', (query) => {
         query.select(['id', 'name', 'color'])
       })
-      .preload('list', (query) => query.select(['id', 'title']))
       .where('project_id', '=', projectId)
 
     return data
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const data = request.only([
-      'title',
-      'branch',
-      'description',
-      'user_id',
-      'project_id',
-      'start_date',
-      'end_date',
-      'time_days',
-    ])
+    const data = request.only(['title', 'branch', 'description', 'userId', 'projectId'])
 
     const { id } = await Task.create(data)
 
@@ -118,9 +108,9 @@ export default class TasksController {
     })
   }
 
-  public async create({ }: HttpContextContract) { }
+  public async create({}: HttpContextContract) {}
 
-  public async edit({ }: HttpContextContract) { }
+  public async edit({}: HttpContextContract) {}
 
-  public async destroy({ }: HttpContextContract) { }
+  public async destroy({}: HttpContextContract) {}
 }

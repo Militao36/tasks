@@ -18,14 +18,13 @@
 |
 */
 
-import './routes/user'
-import './routes/projects'
-import './routes/labels'
-import './routes/tasks'
-import './routes/comment'
-import './routes/lists'
-
 import Route from '@ioc:Adonis/Core/Route'
+import './routes/comment'
+import './routes/labels'
+import './routes/lists'
+import './routes/projects'
+import './routes/tasks'
+import './routes/user'
 
 Route.get('/', async () => {
   return { hello: 'world' }
