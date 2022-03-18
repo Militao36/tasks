@@ -25,7 +25,7 @@ export default class TasksController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const data = request.only(['title', 'branch', 'description', 'userId', 'projectId'])
+    const data = request.only(['title', 'branch', 'description', 'userId', 'projectId', 'listId'])
 
     const { id } = await Task.create(data)
 

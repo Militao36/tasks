@@ -1,17 +1,18 @@
 import BadRequestException from 'App/Exceptions/BadRequestException'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import Comment from 'App/Models/Comment'
+import User from 'App/Models/User'
 
 export interface IComments {
   id?: string
   projectId?: string
   taskId?: string
-  userId: string
+  userId?: string
   comment: string
 }
 
 class CommentService {
-  public async store(body: IComments) {
+  public async store(body: IComments, user: User) {
     if (body.projectId && body.taskId) {
       throw new BadRequestException(
         'Deve passar o id do projeto ou da task, não pode passar os dois',
@@ -24,7 +25,7 @@ class CommentService {
       projectId: body?.projectId ?? undefined,
       taskId: body?.taskId ?? undefined,
       comment: body.comment,
-      userId: body.userId,
+      userId: user.id,
     }
 
     const { id } = await Comment.create(data)
@@ -58,10 +59,14 @@ class CommentService {
     })
   }
 
-  public async update(body: IComments) {
+  public async update(body: IComments, user: User) {
     const comment = await Comment.findByOrFail('id', body.id)
 
-    comment.merge(body)
+    comment.merge({
+      ...body,
+      userId: user.id,
+    })
+
     await comment.save()
   }
 

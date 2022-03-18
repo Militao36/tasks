@@ -15,29 +15,33 @@ export default class CommentsController {
     return response.status(200).json(comments)
   }
 
-  public async store({ request, response }: HttpContextContract) {
-    const data = request.only(['projectId', 'taskId', 'comment', 'userId'])
+  public async store({ request, response, auth }: HttpContextContract) {
+    const data = request.only(['projectId', 'taskId', 'comment'])
 
-    const id = await this.commentService.store({
-      projectId: data.projectId,
-      taskId: data.taskId,
-      comment: data.comment,
-      userId: data.userId,
-    })
+    const id = await this.commentService.store(
+      {
+        projectId: data.projectId,
+        taskId: data.taskId,
+        comment: data.comment,
+      },
+      auth.user!
+    )
     return response.status(201).json({ id })
   }
 
-  public async update({ request, response, params }: HttpContextContract) {
+  public async update({ request, response, params, auth }: HttpContextContract) {
     const { id } = params
     const data = request.only(['projectId', 'taskId', 'comment', 'userId'])
 
-    await this.commentService.update({
-      id,
-      projectId: data.projectId,
-      taskId: data.taskId,
-      comment: data.comment,
-      userId: data.userId,
-    })
+    await this.commentService.update(
+      {
+        id,
+        projectId: data.projectId,
+        taskId: data.taskId,
+        comment: data.comment,
+      },
+      auth.user!
+    )
 
     return response.noContent()
   }
