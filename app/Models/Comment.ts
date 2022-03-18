@@ -5,10 +5,13 @@ import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adon
 import Task from './Task'
 import Project from './Project'
 import User from './User'
+import { CamelCaseNamingStrategy } from 'App/NamingStrategy/CamelCaseNamingStrategy'
 
 export default class Comment extends BaseModel {
   public static table = 'comments'
-  // para não da problema o id de não retornar
+
+  public static namingStrategy = new CamelCaseNamingStrategy()
+
   public static selfAssignPrimaryKey = true
 
   @column({ isPrimary: true })

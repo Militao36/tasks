@@ -2,6 +2,7 @@ import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Project from 'App/Models/Project'
 import Task from 'App/Models/Task'
 import User from 'App/Models/User'
+import { DateTime } from 'luxon'
 
 export default class TaskSeeder extends BaseSeeder {
   public async run() {
@@ -15,6 +16,8 @@ export default class TaskSeeder extends BaseSeeder {
         branch: 'tela-caixa',
         projectId: projects[0].id,
         userId: users[0].id,
+        startDate: DateTime.local(),
+        endDate: DateTime.local()
       },
       {
         title: 'Adicionar tela de cliente',
@@ -22,6 +25,7 @@ export default class TaskSeeder extends BaseSeeder {
         branch: 'tela-cliente',
         projectId: projects[1].id,
         userId: users[1].id,
+        startDate: DateTime.local(),
       },
       {
         title: 'Adicionar tela de venda',
@@ -29,6 +33,9 @@ export default class TaskSeeder extends BaseSeeder {
         branch: 'tela-venda',
         projectId: projects[2].id,
         userId: users[2].id,
+        startDate: DateTime.local(),
+        endDate: DateTime.local(),
+        deliveryDate: DateTime.local()
       },
     ])
   }

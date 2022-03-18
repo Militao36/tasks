@@ -10,6 +10,7 @@ export default class Users extends BaseSchema {
       table.string('username')
       table.string('email', 255)
       table.string('password')
+      table.string('remember_me_token')
       table.enum('setor', [
         SectorEnum.Adm,
         SectorEnum.Suporte,

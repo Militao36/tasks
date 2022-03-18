@@ -1,57 +1,73 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Project from 'App/Models/Project'
-import ProjectUser from 'App/Models/ProjectUser'
+
+import ProjectService, { Status } from 'App/Services/ProjectService'
+import ProjectUsersService from 'App/Services/ProjectUsersService'
 
 export default class ProjectsController {
-  public async index({}: HttpContextContract) {
-    const data = await Project.query()
-      .select(['id', 'title', 'description', 'start_date', 'end_date'])
-      .preload('users', (query) => {
-        query.select(['id', 'username'])
-      })
+  private projectService: typeof ProjectService
+  private projectUsersService: typeof ProjectUsersService
 
+  constructor() {
+    this.projectService = ProjectService
+    this.projectUsersService = ProjectUsersService
+  }
+
+  public async index({ }: HttpContextContract) {
+    const data = await this.projectService.index()
     return data
   }
 
   public async show({ params }: HttpContextContract) {
-    const project = await Project.findByOrFail('id', params.id)
-
-    await project.load('users', (query) => {
-      query.select(['id', 'username'])
-    })
+    const project = await this.projectService.show(params.id)
 
     return project
   }
 
   public async store({ request }: HttpContextContract) {
-    const data = request.only(['title', 'description', 'users'])
+    const data = request.only(['title', 'description', 'deliveryDate', 'users'])
 
-    const project = new Project()
-
-    project.fill({
+    const id = await this.projectService.create({
       title: data.title,
       description: data.description,
+      status: Status.draft,
+      deliveryDate: data.deliveryDate,
     })
 
-    const { id } = await project.save()
+    await this.projectUsersService.create(id, data.users)
 
-    const users = data.users?.map((userId: any) => {
+    const users = data.users?.map((user: any) => {
       return {
-        user_id: userId.id,
+        user_id: user.id,
         project_id: id,
       }
     })
-
-    await ProjectUser.createMany(users)
-
+    
     return id
   }
 
-  public async create({}: HttpContextContract) {}
+  public async update({ request, params }: HttpContextContract) {
+    const { id } = params
+    const data = request.only(['title', 'description', 'deliveryDate', 'status', 'users'])
 
-  public async edit({}: HttpContextContract) {}
+    await this.projectService.update({
+      id,
+      title: data.title,
+      description: data.description,
+      deliveryDate: data.deliveryDate
+    })
 
-  public async update({}: HttpContextContract) {}
+    await this.projectUsersService.create(id, data.users)
+  }
 
-  public async destroy({}: HttpContextContract) {}
+  public async removeUserOfProject({ params, response }: HttpContextContract) {
+    const { projectId, userId } = params
+    await this.projectUsersService.delete(projectId, userId)
+    return response.noContent()
+  }
+
+  public async create({ }: HttpContextContract) { }
+
+  public async edit({ }: HttpContextContract) { }
+
+  public async destroy({ }: HttpContextContract) { }
 }

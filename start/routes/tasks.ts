@@ -1,8 +1,14 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
-  Route.get('/', 'TasksController.index')
   Route.get('/:id', 'TasksController.show')
-  Route.post('/', 'TasksController.store')
   Route.put('/:id', 'TasksController.update')
-}).prefix('/tasks')
+
+  Route.post('/', 'TasksController.store')
+  Route.post('/task/move', 'TasksController.updatedTaskMoveForList')
+
+  Route.get('/status/:status', 'TasksController.tasks')
+  Route.get('/', 'TasksController.index')
+})
+  .prefix('/tasks')
+  .middleware('auth')

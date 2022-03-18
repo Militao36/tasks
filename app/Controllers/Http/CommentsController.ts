@@ -1,47 +1,55 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Comment from 'App/Models/Comment'
+import CommentService from 'App/Services/CommentService'
 
 export default class CommentsController {
+  private commentService: typeof CommentService
+
+  constructor() {
+    this.commentService = CommentService
+  }
+
   public async index({ response, request }: HttpContextContract) {
-    const { type, id } = request.qs() as { type: 'project' | 'task'; id: string }
-
-    const query = Comment.query()
-
-    if (!id || !type) {
-      return response.notFound()
-    }
-
-    if (type === 'project') {
-      query.where('project_id', '=', id)
-    }
-
-    if (type === 'task') {
-      query.where('task_id', '=', id)
-    }
-
-    const comments = await query.select().orderBy('created_at', 'asc')
+    const { type, id } = request.qs()
+    const comments = await this.commentService.index(id, type)
 
     return response.status(200).json(comments)
   }
 
-  public async store({ request, response }: HttpContextContract) {
-    const data = request.only(['project_id', 'task_id', 'comment', 'user_id'])
+  public async store({ request, response, auth }: HttpContextContract) {
+    const data = request.only(['projectId', 'taskId', 'comment'])
 
-    if (data.project_id && data.task_id) {
-      return response.badRequest()
-    }
+    const id = await this.commentService.store(
+      {
+        projectId: data.projectId,
+        taskId: data.taskId,
+        comment: data.comment,
+      },
+      auth.user!
+    )
+    return response.status(201).json({ id })
+  }
 
-    const comment = new Comment()
+  public async update({ request, response, params, auth }: HttpContextContract) {
+    const { id } = params
+    const data = request.only(['projectId', 'taskId', 'comment', 'userId'])
 
-    comment.fill({
-      projectId: data?.project_id ?? null,
-      taskId: data?.task_id ?? null,
-      comment: data.comment,
-      userId: data.user_id,
-    })
+    await this.commentService.update(
+      {
+        id,
+        projectId: data.projectId,
+        taskId: data.taskId,
+        comment: data.comment,
+      },
+      auth.user!
+    )
 
-    await comment.save()
+    return response.noContent()
+  }
 
-    return response.status(201).json({ id: comment.id })
+  public async delete({ response, params }: HttpContextContract) {
+    const { id } = params
+
+    await this.commentService.delete(id)
+    return response.noContent()
   }
 }

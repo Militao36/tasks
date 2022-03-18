@@ -1,18 +1,12 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Projects extends BaseSchema {
-  protected tableName = 'projects'
+export default class Lists extends BaseSchema {
+  protected tableName = 'lists'
 
-  public async up() {
+  public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id', 36).primary()
-      table.string('title', 50).unique()
-      table.text('description')
-      table.dateTime('start_date')
-      table.dateTime('end_date')
-      table.dateTime('delivery_date')
-      table.dateTime('expected_date')
-      table.enum('status', ['draft', 'published'])
+      table.string("title")
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
@@ -22,7 +16,7 @@ export default class Projects extends BaseSchema {
     })
   }
 
-  public async down() {
+  public async down () {
     this.schema.dropTable(this.tableName)
   }
 }

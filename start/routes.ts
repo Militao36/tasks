@@ -18,15 +18,18 @@
 |
 */
 
-import './routes/user'
-import './routes/projects'
+import Route from '@ioc:Adonis/Core/Route'
+import './routes/comment'
 import './routes/labels'
+import './routes/lists'
+import './routes/projects'
 import './routes/tasks'
 import './routes/comment'
 import './routes/labelsTask'
+import './routes/user'
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+
+
+Route.post('/auth', 'AuthController.auth')

@@ -2,9 +2,12 @@ import { randomUUID } from 'crypto'
 
 import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
+import { CamelCaseNamingStrategy } from 'App/NamingStrategy/CamelCaseNamingStrategy'
 
 export default class ProjectUser extends BaseModel {
   public static table = 'projects_users'
+
+  public static namingStrategy = new CamelCaseNamingStrategy()
 
   public static selfAssignPrimaryKey = true
 
