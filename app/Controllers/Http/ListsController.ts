@@ -12,6 +12,7 @@ export default class ListsController {
     const lists = await List.query()
       .select(['id', 'title', 'projectId'])
       .where('project_id', projectId)
+      .orderBy('createdAt', 'asc')
 
     return lists
   }
