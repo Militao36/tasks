@@ -58,7 +58,16 @@ export default class TasksController {
     const { id } = params
 
     const data = await Task.query()
-      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
+      .select([
+        'id',
+        'title',
+        'description',
+        'delivery_date',
+        'end_date',
+        'user_id',
+        'branch',
+        'delivery_date',
+      ])
       .preload('labels', (query) => query.select(['id', 'name', 'color']))
       .preload('user', (query) => query.select(['id', 'username']))
       .preload('comments', (query) =>
