@@ -33,7 +33,7 @@ export default class TasksController {
   public async update({ request, response, params }: HttpContextContract) {
     const { id } = params
 
-    const data = request.only(['title', 'branch', 'description', 'userId', 'projectId'])
+    const data = request.only(['title', 'branch', 'description', 'userId', 'projectId', 'startDate', 'endDate'])
 
     const titleAlreadyInUse = await Task.findBy('title', data.title)
 
@@ -44,10 +44,8 @@ export default class TasksController {
     }
 
     const task = await Task.findOrFail(id)
-
-    task.merge({
-      ...data,
-    })
+    
+    task.merge(data)
 
     await task.save()
 
