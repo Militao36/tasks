@@ -43,12 +43,14 @@ export default class TasksController {
       'endDate',
     ])
 
-    const titleAlreadyInUse = await Task.findBy('title', data.title)
+    if (data.title) {
+      const titleAlreadyInUse = await Task.findBy('title', data.title)
 
-    if (titleAlreadyInUse?.id && titleAlreadyInUse?.id !== id) {
-      return response.status(422).json({
-        message: 'Esse titulo já está em uso.',
-      })
+      if (titleAlreadyInUse?.id && titleAlreadyInUse?.id !== id) {
+        return response.status(422).json({
+          message: 'Esse titulo já está em uso.',
+        })
+      }
     }
 
     const task = await Task.findOrFail(id)
