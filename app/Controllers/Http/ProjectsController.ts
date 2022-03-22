@@ -1,5 +1,4 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import ProjectService, { Status } from 'App/Services/ProjectService'
 import ProjectUsersService from 'App/Services/ProjectUsersService'
 
@@ -12,7 +11,7 @@ export default class ProjectsController {
     this.projectUsersService = ProjectUsersService
   }
 
-  public async index({ }: HttpContextContract) {
+  public async index({}: HttpContextContract) {
     const data = await this.projectService.index()
     return data
   }
@@ -41,7 +40,7 @@ export default class ProjectsController {
         project_id: id,
       }
     })
-    
+
     return id
   }
 
@@ -53,7 +52,7 @@ export default class ProjectsController {
       id,
       title: data.title,
       description: data.description,
-      deliveryDate: data.deliveryDate
+      deliveryDate: data.deliveryDate,
     })
 
     await this.projectUsersService.create(id, data.users)
@@ -65,9 +64,9 @@ export default class ProjectsController {
     return response.noContent()
   }
 
-  public async create({ }: HttpContextContract) { }
+  public async create({}: HttpContextContract) {}
 
-  public async edit({ }: HttpContextContract) { }
+  public async edit({}: HttpContextContract) {}
 
-  public async destroy({ }: HttpContextContract) { }
+  public async destroy({}: HttpContextContract) {}
 }

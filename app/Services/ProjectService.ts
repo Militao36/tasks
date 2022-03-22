@@ -1,6 +1,5 @@
-import { DateTime } from 'luxon'
 import Project from 'App/Models/Project'
-
+import { DateTime } from 'luxon'
 import { IUser } from './UserService'
 
 export enum Status {
@@ -25,7 +24,7 @@ class ProjectService {
     const { id } = await Project.create({
       title: body.title,
       description: body.description,
-      deliveryDate: body.deliveryDate || null as any,
+      deliveryDate: body.deliveryDate || (null as any),
       status: Status.draft,
     })
 
@@ -86,7 +85,7 @@ class ProjectService {
           password: value.password,
           setor: value.setor,
         }
-      })
+      }),
     }
   }
 }

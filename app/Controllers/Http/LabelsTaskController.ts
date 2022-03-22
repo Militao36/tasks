@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import LabelsTask from 'App/Models/labelsTask'
+import LabelsTask from 'App/Models/LabelsTask'
+
 export default class TasksController {
   public async index({  }: HttpContextContract) {
-    
+
   }
 
   public async store({ request, response}: HttpContextContract) {
@@ -23,11 +24,11 @@ export default class TasksController {
   }
 
   public async update({  }: HttpContextContract) {
-  
+
   }
 
   public async show({  }: HttpContextContract) {
-   
+
   }
 
   public async create({}: HttpContextContract) {}
