@@ -81,9 +81,6 @@ class ProjectService {
         return {
           id: value.id,
           username: value.username,
-          email: value.email,
-          password: value.password,
-          setor: value.setor,
         }
       }),
     }
