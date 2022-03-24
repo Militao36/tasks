@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Task from 'App/Models/Task'
 import { DateTime } from 'luxon'
 import { MessagesResponses } from '../../../utils/messages/MessagesResponse'
+import TasksService from 'App/Services/TasksService'
 
 export default class TasksController {
   public async index({ request, response }: HttpContextContract) {
@@ -25,7 +26,7 @@ export default class TasksController {
   public async store({ request, response }: HttpContextContract) {
     const data = request.only(['title', 'branch', 'description', 'userId', 'projectId', 'listId'])
 
-    const { id } = await Task.create(data)
+    const id = await TasksService.store(data)
 
     return response.status(201).json({ id })
   }
@@ -38,70 +39,29 @@ export default class TasksController {
       'branch',
       'description',
       'userId',
+      'listId',
       'projectId',
       'startDate',
       'endDate',
     ])
-
-    if (data.title) {
-      const titleAlreadyInUse = await Task.findBy('title', data.title)
-
-      if (titleAlreadyInUse?.id && titleAlreadyInUse?.id !== id) {
-        return response.status(422).json({
-          message: 'Esse titulo já está em uso.',
-        })
-      }
-    }
-
-    const task = await Task.findOrFail(id)
-
-    task.merge(data)
-
-    await task.save()
-
-    return response.status(204).json({})
+    await TasksService.update(data, id)
+    return response.noContent()
   }
 
   public async show({ params, response }: HttpContextContract) {
     const { id } = params
-
-    const data = await Task.query()
-      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
-      .preload('labels', (query) => query.select(['id', 'name', 'color']))
-      .preload('user', (query) => query.select(['id', 'username']))
-      .preload('comments', (query) =>
-        query
-          .select('comment', 'user_id', 'created_at')
-          .orderBy('created_at', 'asc')
-          .preload('user', (query) => query.select('id', 'username'))
-      )
-      .where('id', '=', id)
-      .first()
-
+    const data = TasksService.show(id)
     if (!data) {
       return response.notFound()
     }
-
     return data
   }
 
   public async tasks({ params }: HttpContextContract) {
     const { status = 'in-progress' } = params
 
-    const query = Task.query()
-      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
-      .preload('user', (query) => query.select(['username']))
-
-    switch (status) {
-      case 'in-progress':
-        query.whereNotNull('start_date').andWhereNull('end_date')
-        break
-      default:
-        query.whereNotNull('start_date').andWhereNull('end_date')
-    }
-
-    const tasks = await query
-    return tasks.map((task) => {
+    const query = await TasksService.tasks(status)
+    return query.map((task) => {
       return {
         ...task.serialize(),
         start_date: DateTime.fromJSDate(task.startDate as any).toFormat('dd/MM/yyyy HH:mm'),
@@ -111,15 +71,7 @@ export default class TasksController {
 
   public async updatedTaskMoveForList({ request }: HttpContextContract) {
     const data = request.only(['listId', 'taskId', 'type'])
-
-    const task = await Task.findByOrFail('id', data.taskId)
-    await task.load('list')
-
-    task.merge({
-      listId: data.listId,
-    })
-
-    await task.save()
+    await TasksService.updatedTaskMoveForList(data, data.taskId)
   }
 
   public async create({}: HttpContextContract) {}
