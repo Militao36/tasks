@@ -34,11 +34,11 @@ class ProjectService {
   public async update(body: IProject): Promise<void> {
     const project = await Project.findOrFail(body.id)
 
-    project.merge({
-      title: body.title,
-      description: body.title,
-      deliveryDate: (body.deliveryDate || null) as any,
-    })
+    if (body.deliveryDate === ('' as any)) {
+      body.deliveryDate = null
+    }
+
+    project.merge(body as Project)
 
     await project.save()
   }

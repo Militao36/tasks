@@ -11,7 +11,7 @@ export interface ITasks {
   startDate?: string
   endDate?: string
 }
-class tasksService {
+class TaskService {
   public async store(body: ITasks) {
     const data = {
       title: body.title,
@@ -82,6 +82,7 @@ class tasksService {
     }
     return await query
   }
+
   public async updatedTaskMoveForList(body: ITasks, idTask: string) {
     const task = await Task.findByOrFail('id', idTask)
     await task.load('list')
@@ -92,7 +93,6 @@ class tasksService {
 
     await task.save()
   }
-  public async
 }
 
-export default new tasksService()
+export default new TaskService()

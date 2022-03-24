@@ -34,28 +34,30 @@ export default class ProjectsController {
 
     await this.projectUsersService.create(id, data.users)
 
-    const users = data.users?.map((user: any) => {
-      return {
-        user_id: user.id,
-        project_id: id,
-      }
-    })
-
     return id
   }
 
-  public async update({ request, params }: HttpContextContract) {
+  public async update({ request, response, params }: HttpContextContract) {
     const { id } = params
-    const data = request.only(['title', 'description', 'deliveryDate', 'status', 'users'])
+    const data = request.only([
+      'title',
+      'description',
+      'deliveryDate',
+      'status',
+      'users',
+      'startDate',
+      'endDate',
+      'expectedDate',
+    ])
 
     await this.projectService.update({
       id,
-      title: data.title,
-      description: data.description,
-      deliveryDate: data.deliveryDate,
+      ...data,
     })
 
     await this.projectUsersService.create(id, data.users)
+
+    return response.noContent()
   }
 
   public async removeUserOfProject({ params, response }: HttpContextContract) {
