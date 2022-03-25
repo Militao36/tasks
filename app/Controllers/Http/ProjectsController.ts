@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import ProjectService, { Status } from 'App/Services/ProjectService'
+import ProjectService from 'App/Services/ProjectService'
 import ProjectUsersService from 'App/Services/ProjectUsersService'
 
 export default class ProjectsController {
@@ -23,13 +23,11 @@ export default class ProjectsController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const data = request.only(['title', 'description', 'deliveryDate', 'users'])
+    const data = request.only(['title', 'description', 'users'])
 
     const id = await this.projectService.create({
       title: data.title,
       description: data.description,
-      status: Status.draft,
-      deliveryDate: data.deliveryDate,
     })
 
     await this.projectUsersService.create(id, data.users)
