@@ -17,7 +17,11 @@ export default class ListsController {
     return lists
   }
 
-  public async show({}: HttpContextContract) {}
+  public async show({ params }: HttpContextContract) {
+    const { id } = params
+    const list = await List.findByOrFail('id', id)
+    return list
+  }
 
   public async create({ request, response }: HttpContextContract) {
     const data = request.only(['title', 'projectId'])
@@ -30,11 +34,22 @@ export default class ListsController {
     return response.created({ id })
   }
 
+  public async update({ request, response, params }: HttpContextContract) {
+    const { id } = params
+    const data = request.only(['title', 'projectId'])
+
+    const list = await List.findByOrFail('id', id)
+
+    list.merge(data)
+
+    await list.save()
+
+    return response.noContent()
+  }
+
   public async store({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
-
-  public async update({}: HttpContextContract) {}
 
   public async destroy({}: HttpContextContract) {}
 }

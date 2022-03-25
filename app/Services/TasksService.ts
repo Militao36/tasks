@@ -26,16 +26,8 @@ class TaskService {
   }
 
   public async update(body: ITasks, idTask: string) {
-    const data = {
-      title: body.title,
-      branch: body.branch,
-      description: body.description,
-      userId: body.userId,
-      projectId: body.projectId,
-      listId: body.listId,
-    }
-    if (data.title) {
-      const titleAlreadyInUse = await Task.findBy('title', data.title)
+    if (body.title) {
+      const titleAlreadyInUse = await Task.findBy('title', body.title)
 
       if (titleAlreadyInUse?.id && titleAlreadyInUse?.id !== idTask) {
         return {
@@ -45,7 +37,7 @@ class TaskService {
     }
     const task = await Task.findOrFail(idTask)
 
-    task.merge(data)
+    task.merge(body as any)
 
     await task.save()
     return
@@ -53,7 +45,16 @@ class TaskService {
 
   public async show(idTask: string) {
     const data = await Task.query()
-      .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id'])
+      .select([
+        'id',
+        'title',
+        'branch',
+        'description',
+        'start_date',
+        'end_date',
+        'user_id',
+        'delivery_date',
+      ])
       .preload('labels', (query) => query.select(['id', 'name', 'color']))
       .preload('user', (query) => query.select(['id', 'username']))
       .preload('comments', (query) =>

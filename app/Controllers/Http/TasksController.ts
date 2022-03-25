@@ -43,6 +43,7 @@ export default class TasksController {
       'projectId',
       'startDate',
       'endDate',
+      'deliveryDate',
     ])
     await TasksService.update(data, id)
     return response.noContent()
