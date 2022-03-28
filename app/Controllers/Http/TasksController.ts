@@ -3,9 +3,11 @@ import Task from 'App/Models/Task'
 import { DateTime } from 'luxon'
 import { MessagesResponses } from '../../../utils/messages/MessagesResponse'
 import TasksService from 'App/Services/TasksService'
+import ProjectService from 'App/Services/ProjectService'
+import Project from 'App/Models/Project'
 
 export default class TasksController {
-  public async index({ request, response }: HttpContextContract) {
+  public async index({ request, bouncer, response }: HttpContextContract) {
     const { projectId } = request.qs()
 
     if (!projectId) {
@@ -13,6 +15,9 @@ export default class TasksController {
         message: MessagesResponses.NOT_FOUND,
       })
     }
+
+    const project = await ProjectService.show(projectId)
+    await bouncer.with('ProjectPolicy').authorize('view', project as Project)
 
     const data = await Task.query()
       .select(['id', 'title', 'description', 'start_date', 'end_date', 'user_id', 'listId'])
@@ -23,15 +28,18 @@ export default class TasksController {
     return data
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request, bouncer, response }: HttpContextContract) {
     const data = request.only(['title', 'branch', 'description', 'userId', 'projectId', 'listId'])
+
+    const project = await ProjectService.show(data.projectId)
+    await bouncer.with('ProjectPolicy').authorize('view', project as Project)
 
     const id = await TasksService.store(data)
 
     return response.status(201).json({ id })
   }
 
-  public async update({ request, response, params }: HttpContextContract) {
+  public async update({ request, response, bouncer, params }: HttpContextContract) {
     const { id } = params
 
     const data = request.only([
@@ -45,6 +53,10 @@ export default class TasksController {
       'endDate',
       'deliveryDate',
     ])
+
+    const project = await ProjectService.show(data.projectId)
+    await bouncer.with('ProjectPolicy').authorize('view', project as Project)
+
     await TasksService.update(data, id)
     return response.noContent()
   }

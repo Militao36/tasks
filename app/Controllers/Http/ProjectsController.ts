@@ -1,4 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Project from 'App/Models/Project'
 import ProjectService from 'App/Services/ProjectService'
 import ProjectUsersService from 'App/Services/ProjectUsersService'
 
@@ -16,14 +17,18 @@ export default class ProjectsController {
     return data
   }
 
-  public async show({ params }: HttpContextContract) {
+  public async show({ params, bouncer }: HttpContextContract) {
     const project = await this.projectService.show(params.id)
+
+    await bouncer.with('ProjectPolicy').authorize('view', project as Project)
 
     return project
   }
 
-  public async store({ request }: HttpContextContract) {
+  public async store({ request, bouncer }: HttpContextContract) {
     const data = request.only(['title', 'description', 'users'])
+
+    await bouncer.with('ProjectPolicy').authorize('create')
 
     const id = await this.projectService.create({
       title: data.title,
@@ -35,7 +40,7 @@ export default class ProjectsController {
     return id
   }
 
-  public async update({ request, response, params }: HttpContextContract) {
+  public async update({ request, response, params, bouncer }: HttpContextContract) {
     const { id } = params
     const data = request.only([
       'title',
@@ -48,6 +53,9 @@ export default class ProjectsController {
       'expectedDate',
     ])
 
+    const project = await ProjectService.show(id)
+    await bouncer.with('ProjectPolicy').authorize('view', project as Project)
+
     await this.projectService.update({
       id,
       ...data,
@@ -58,9 +66,14 @@ export default class ProjectsController {
     return response.noContent()
   }
 
-  public async removeUserOfProject({ params, response }: HttpContextContract) {
+  public async removeUserOfProject({ params, response, bouncer }: HttpContextContract) {
     const { projectId, userId } = params
+
+    const project = await ProjectService.show(projectId)
+    await bouncer.with('ProjectPolicy').authorize('delete', project as Project)
+
     await this.projectUsersService.delete(projectId, userId)
+
     return response.noContent()
   }
 

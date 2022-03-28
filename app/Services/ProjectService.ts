@@ -42,7 +42,7 @@ class ProjectService {
     await project.save()
   }
 
-  public async index() {
+  public async index(): Promise<any> {
     const data = await Project.query()
       .select(['id', 'title', 'description', 'startDate', 'endDate'])
       .preload('users', (query) => query.select(['id', 'username']))
