@@ -10,7 +10,9 @@ export interface ITasks {
   listId?: string
   startDate?: string
   endDate?: string
+  deliveryDate?: string
 }
+
 class TaskService {
   public async store(body: ITasks) {
     const data = {
@@ -37,7 +39,10 @@ class TaskService {
     }
     const task = await Task.findOrFail(idTask)
 
-    task.merge(body as any)
+    task.merge({
+      ...body,
+      deliveryDate: body.deliveryDate || null
+    })
 
     await task.save()
     return

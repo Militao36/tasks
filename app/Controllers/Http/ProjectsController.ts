@@ -12,7 +12,7 @@ export default class ProjectsController {
     this.projectUsersService = ProjectUsersService
   }
 
-  public async index({}: HttpContextContract) {
+  public async index({ }: HttpContextContract) {
     const data = await this.projectService.index()
     return data
   }
@@ -59,6 +59,10 @@ export default class ProjectsController {
     await this.projectService.update({
       id,
       ...data,
+      startDate: data.startDate || null,
+      endDate: data.endDate || null,
+      deliveryDate: data.deliveryDate || null,
+      expectedDate: data.expectedDate  || null
     })
 
     await this.projectUsersService.create(id, data.users)
@@ -77,9 +81,9 @@ export default class ProjectsController {
     return response.noContent()
   }
 
-  public async create({}: HttpContextContract) {}
+  public async create({ }: HttpContextContract) { }
 
-  public async edit({}: HttpContextContract) {}
+  public async edit({ }: HttpContextContract) { }
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy({ }: HttpContextContract) { }
 }

@@ -41,7 +41,7 @@ export default class TasksController {
 
   public async update({ request, response, bouncer, params }: HttpContextContract) {
     const { id } = params
-
+    
     const data = request.only([
       'title',
       'branch',
@@ -53,7 +53,7 @@ export default class TasksController {
       'endDate',
       'deliveryDate',
     ])
-
+    
     const project = await ProjectService.show(data.projectId)
     await bouncer.with('ProjectPolicy').authorize('view', project as Project)
 
