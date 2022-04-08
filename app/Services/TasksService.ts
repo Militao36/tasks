@@ -1,3 +1,4 @@
+import AlredyExistsExeptionException from 'App/Exceptions/AlredyExistsExeptionException'
 import Task from 'App/Models/Task'
 
 export interface ITasks {
@@ -19,11 +20,18 @@ class TaskService {
       title: body.title,
       branch: body.branch,
       description: body.description,
-      userId: body.userId,
+      userId: body.userId || null,
       projectId: body.projectId,
       listId: body.listId,
     }
-    const { id } = await Task.create(data)
+
+    const titleAlreadyInUse = await Task.findBy('title', data.title)
+
+    if (titleAlreadyInUse?.id) {
+      throw new AlredyExistsExeptionException('Esse titulo já está em uso.', 400)
+    }
+
+    const { id } = await Task.create(data as any)
     return id
   }
 
@@ -32,16 +40,14 @@ class TaskService {
       const titleAlreadyInUse = await Task.findBy('title', body.title)
 
       if (titleAlreadyInUse?.id && titleAlreadyInUse?.id !== idTask) {
-        return {
-          message: 'Esse titulo já está em uso.',
-        }
+        throw new AlredyExistsExeptionException('Esse titulo já está em uso.', 400)
       }
     }
     const task = await Task.findOrFail(idTask)
 
     task.merge({
       ...body,
-      deliveryDate: body.deliveryDate || null
+      deliveryDate: body.deliveryDate || null,
     })
 
     await task.save()
@@ -59,6 +65,7 @@ class TaskService {
         'end_date',
         'user_id',
         'delivery_date',
+        'list_id',
       ])
       .preload('labels', (query) => query.select(['id', 'name', 'color']))
       .preload('user', (query) => query.select(['id', 'username']))
