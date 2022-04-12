@@ -12,7 +12,7 @@ export default class ProjectsController {
     this.projectUsersService = ProjectUsersService
   }
 
-  public async index({ }: HttpContextContract) {
+  public async index({}: HttpContextContract) {
     const data = await this.projectService.index()
     return data
   }
@@ -25,7 +25,7 @@ export default class ProjectsController {
     return project
   }
 
-  public async store({ request, bouncer }: HttpContextContract) {
+  public async store({ request, bouncer, auth }: HttpContextContract) {
     const data = request.only(['title', 'description', 'users'])
 
     await bouncer.with('ProjectPolicy').authorize('create')
@@ -35,7 +35,8 @@ export default class ProjectsController {
       description: data.description,
     })
 
-    await this.projectUsersService.create(id, data.users)
+    const users = [...data.users, { id: auth.user!.id }]
+    await this.projectUsersService.create(id, users)
 
     return id
   }
@@ -62,7 +63,7 @@ export default class ProjectsController {
       startDate: data.startDate || null,
       endDate: data.endDate || null,
       deliveryDate: data.deliveryDate || null,
-      expectedDate: data.expectedDate  || null
+      expectedDate: data.expectedDate || null,
     })
 
     await this.projectUsersService.create(id, data.users)
@@ -76,14 +77,20 @@ export default class ProjectsController {
     const project = await ProjectService.show(projectId)
     await bouncer.with('ProjectPolicy').authorize('delete', project as Project)
 
+    if (project.users?.length === 1) {
+      return response
+        .status(400)
+        .json({ message: 'Não é posssível deletar todos usuários do projeto.' })
+    }
+
     await this.projectUsersService.delete(projectId, userId)
 
     return response.noContent()
   }
 
-  public async create({ }: HttpContextContract) { }
+  public async create({}: HttpContextContract) {}
 
-  public async edit({ }: HttpContextContract) { }
+  public async edit({}: HttpContextContract) {}
 
-  public async destroy({ }: HttpContextContract) { }
+  public async destroy({}: HttpContextContract) {}
 }

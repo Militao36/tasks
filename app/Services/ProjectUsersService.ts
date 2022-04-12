@@ -7,7 +7,7 @@ export interface IProjectUser {
 }
 
 class ProjectUsersService {
-  public async create(projectId: string, body: []): Promise<void> {
+  public async create(projectId: string, body: any[]): Promise<void> {
     const projectUsers: IProjectUser[] =
       body?.map((user: { id: string }) => {
         return {
