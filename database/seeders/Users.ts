@@ -7,21 +7,39 @@ export default class UsersSeeder extends BaseSeeder {
     await User.createMany([
       {
         username: 'Miltiao36',
-        email: 'matheus@gmail.com',
-        password: '123456',
+        email: 'matheusmoreira3693@gmail.com',
+        password: '147258369',
         setor: SectorEnum.Adm,
       },
       {
         username: '11JL98',
-        email: 'joao@gmail.com',
+        email: 'joaoferrreira981011@gmail.com',
         password: '123456',
         setor: SectorEnum.Adm,
       },
       {
         username: 'eriksjr',
-        email: 'eriks@gmail.com',
-        password: '123456',
-        setor: SectorEnum.Finaceiro,
+        email: 'eriksjunior13@gmail.com',
+        password: '17/10/96',
+        setor: SectorEnum.Adm,
+      },
+      {
+        username: 'andre',
+        email: 'andre-nv@hotmail.com',
+        password: '123456789',
+        setor: SectorEnum.Adm,
+      },
+      {
+        username: 'jmarcelo',
+        email: 'jmarcelo@winfit.com.br',
+        password: 'marias10',
+        setor: SectorEnum.Adm,
+      },
+      {
+        username: 'jmarcelo',
+        email: 'joaoguilherme@winfit.com.br',
+        password: 'marias10',
+        setor: SectorEnum.Adm,
       },
     ])
   }
